@@ -22,11 +22,11 @@ USE `music_store`;
 -- Volcando estructura para tabla music_store.songs
 CREATE TABLE IF NOT EXISTS `songs` (
   `song_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) DEFAULT NULL,
-  `artist` varchar(50) DEFAULT NULL,
+  `title` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `artist` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `price` float DEFAULT NULL,
   PRIMARY KEY (`song_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -35,8 +35,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `salt` text COLLATE utf8mb4_general_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -50,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `user_cart` (
   KEY `song_id` (`song_id`),
   CONSTRAINT `1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `2` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -64,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `user_songs` (
   KEY `user_song` (`user_song`),
   CONSTRAINT `FK__songs` FOREIGN KEY (`user_song`) REFERENCES `songs` (`song_id`),
   CONSTRAINT `FK__users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- La exportación de datos fue deseleccionada.
 

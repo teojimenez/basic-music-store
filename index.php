@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/index/index.css">
+    <link rel="stylesheet" href="styles/index.css">
     <style>
       .error-content{
         color: red;
@@ -18,17 +18,11 @@
         top: 10%;
       }
     </style>
-    <title>Document</title>
+    <title>LOG IN / SIGN UP</title>
 </head>
 <body>
     <h4 class="error-content"></h4>
-    <!-- <a href="login.php">Log In</a>
-    <a href="register.php">Register</a> -->
     <div class="wrapper">
-      <!-- <div class="title-text">
-        <div class="title login">Login Form</div>
-        <div class="title signup">Signup Form</div>
-      </div> -->
       <div class="form-container">
         <div class="slide-controls">
           <input type="radio" name="slide" id="login" checked>
@@ -40,15 +34,12 @@
         <div class="form-inner">
 
           <form action="index.php" class="login" method="post">
-            <!-- <pre>
-            </pre> -->
             <div class="field">
               <input type="text" placeholder="Name" name="username" required>
             </div>
             <div class="field">
               <input type="password" placeholder="Password" name="password" required>
             </div>
-            <!-- <div class="pass-link"><a href="#">Forgot password?</a></div> -->
             <div class="field btn">
               <div class="btn-layer"></div>
               <input type="submit" name="login" value="Login">
@@ -67,20 +58,14 @@
             $result->execute(); //ejecuccion de la query
             $resultSet = $result->get_result(); //obtener las filas devueltas
 
-            //var_dump($resultSet->num_rows); // Verificar el contenido de $row
-            if($resultSet->num_rows > 0) //si hay mas de una fila ejecutar
+            if($resultSet->num_rows > 0)
             {
-                $row = $resultSet->fetch_assoc(); //split
-                // var_dump($row); // Verificar el contenido de $row
-                // echo "Password ingresada: " . $password . "<br>";
-                // echo "Hash almacenado: " . $row['password'] . "<br>";
-
-                if(password_verify($password,  $row['password']))
+                $row = $resultSet->fetch_object(); //split
+                if(password_verify($password . $row->salt,  $row->password))
                 {
-                    // echo "FUNCIONA";
                     $_SESSION['username'] = $username;
                     $_SESSION['password'] = $password;
-                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['id'] = $row->id;
                 }
                 else
                 {
@@ -90,17 +75,8 @@
                 }
             }
             $resultSet->close();
-        // }
-        // header("Location:home.php");
         }
-        if (isset($_SESSION["username"]))
-        {
-          header("Location:home.php");
-        }
-
-
-        /////////
-        if  (isset($_POST['register']))
+        else if  (isset($_POST['register']))
         {
             $username = $_POST['username'];
             $passwd = $_POST['password'];
@@ -119,29 +95,17 @@
             }
             else
             {
-              $hashed_password = password_hash($passwd, PASSWORD_DEFAULT);
-  
-              $query = " INSERT INTO users (name, password) VALUES (?, ?) ";
+              $salt = bin2hex(random_bytes(16));
+              $hashed_password = password_hash($passwd . $salt, PASSWORD_BCRYPT);
+              $query = " INSERT INTO users (name, password, salt) VALUES (?, ?, ?) ";
               $result = $conn->prepare($query);
-              $result->bind_param("ss", $username, $hashed_password);
+              $result->bind_param("sss", $username, $hashed_password, $salt);
               $result->execute();
             }
-            // $query = mysqli_query($conn," SELECT * FROM users WHERE name = '$username' AND password = '$passwd' ");
-            // $row =  mysqli_fetch_array($query);
-            
-            // $conn->query($query);
-            // PONEEEER
-            // if($conn->query($query))
-            //     echo "USUARIO REGISTRADO CORRECTAMENTE";
-            // else
-            //     echo "Error".$query."<br>".$conn->error;
-
         }
-        // if(isset($_SESSION["username"]))
-        // {
-        //    header("Location:home.php");
-        // }
-    
+
+        if (isset($_SESSION["username"]))
+          header("Location:home.php");
 ?>
           <form action="index.php" method="post">
             <div class="field">
@@ -160,8 +124,7 @@
       </div>
     </div>
 
-</body>
-<script>
+    <script>
     const loginText = document.querySelector(".title-text .login");
       const loginForm = document.querySelector("form.login");
       const loginBtn = document.querySelector("label.login");
@@ -180,4 +143,5 @@
         return false;
       });
 </script>
+</body>
 </html>

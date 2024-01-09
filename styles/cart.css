@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@1,700&family=Lato:ital,wght@1,700&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier Prime", monospace;
+    font-family: "Lato", sans-serif;
+}
+.hr{
+    border: 1px solid rgba(0,0,0,0.45);
+    margin-bottom: 18px;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    /*background-color: #8EC5FC;*/
+    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    background-attachment: fixed;
+}
+.prueba{
+    background: green;
+}
+.container{
+    background: blue;
+}
+
+.cart{
+    width: 95%;
+    margin: 80px auto;
+}
+.cart-top{
+margin-top: 20px;
+}
+.cart-list{
+display: flex;
+flex-direction: column;
+gap: 10px;
+padding: 5px;
+overflow: auto;
+}
+h3{
+margin-left: 10px;
+padding-bottom: 6px;
+}
+
+hr{
+margin-bottom: 8px;
+}
+
+.list-item{
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 10px 10px 15px;
+border: 1px solid rgba(0,0,0,0.45);
+border-radius: 10px;
+}
+input{
+background: -webkit-linear-gradient(right, #003366, #004080, #0059b3, #0073e6);
+color: white;
+border: none;
+outline: none;
+}
+.item-coint1{
+width: 60%;
+}
+.field{
+padding: 6px 8px;
+border-radius: 5px;
+}
+.item-artist{
+margin-left: 5px;
+font-size: 14px;
+}
+
+.cart-button{
+margin: 0 auto;
+width: 100%;
+margin-top: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.field-cart{
+margin: 0 auto;
+padding: 10px 34px;
+border-radius: 8px;
+}
